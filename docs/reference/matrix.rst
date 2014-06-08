@@ -1,0 +1,5 @@
+matrix
+=============================
+
+.. automodule:: matrix
+    :members:
