@@ -18,7 +18,7 @@ matrix
     :alt: PYPI Package
     :target: https://pypi.python.org/pypi/matrix
 
-A matrix generator.
+Generic matrix generator.
 
 * Free software: BSD license
 

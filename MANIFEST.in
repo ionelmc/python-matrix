@@ -15,7 +15,8 @@ include CONTRIBUTING.rst
 include LICENSE
 include README.rst
 
-include tox.ini
-include .travis.yml
+include configure
+include tox.ini tox.tmpl.ini
+include .travis.yml .travis.tmpl.yml
 
 global-exclude *.py[co] __pycache__

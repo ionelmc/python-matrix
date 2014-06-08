@@ -21,7 +21,7 @@ setup(
     name="matrix",
     version="0.1.0",
     license="BSD",
-    description="A matrix generator.",
+    description="Generic matrix generator.",
     long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
     author="Ionel Cristian Mărieș",
     author_email="contact@ionelmc.ro",
