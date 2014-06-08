@@ -107,6 +107,9 @@ def parse_config(filename):
 
 
 def from_config(config):
+    """
+    Generate a matrix from a configuration dictionary.
+    """
     matrix = {}
     variables = config.keys()
     for entries in product(*config.values()):
@@ -125,5 +128,8 @@ def from_config(config):
 
 
 def from_file(filename):
+    """
+    Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
+    """
     config = parse_config(filename)
     return from_config(config)
