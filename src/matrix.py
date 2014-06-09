@@ -6,10 +6,7 @@ from ConfigParser import ConfigParser
 from itertools import product
 from fnmatch import fnmatch
 
-try:
-    from collections import OrderedDict
-except ImportError:
-    from .ordereddict import OrderedDict
+from collections import OrderedDict
 
 
 entry_rx = re.compile(r"""
