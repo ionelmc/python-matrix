@@ -35,7 +35,7 @@ class ParseError(Exception):
 
 class DuplicateEntry(ParseError):
     def __str__(self):
-        return "Duplicate entry %r (from %r). Conflicts with %r - it has the same alias."
+        return "Duplicate entry %r (from %r). Conflicts with %r - it has the same alias." % self.args
     __repr__ = __str__
 
 
