@@ -1,6 +1,12 @@
-from matrix import Entry, parse_config, from_file
 import os
-from pprint import pprint, pformat
+from pprint import pformat
+from pprint import pprint
+
+from matrix import Entry
+from matrix import from_file
+from matrix import from_string
+from matrix import parse_config
+
 
 
 def here(path):
@@ -32,7 +38,7 @@ def test_parse_4():
     )
 
 def test_parse_file_1():
-    assert pformat(dict(parse_config(here('config_1.ini')))) == """{'coverage_flags': [Entry('true', alias='cover'),
+    assert pformat(dict(parse_config(open(here('config_1.ini'))))) == """{'coverage_flags': [Entry('true', alias='cover'),
                     Entry('false', alias='nocover')],
  'dependencies': [Entry('python-signalfd', alias='python-signalfd'),
                   Entry('python-signalfd gevent', exclude(python_versions[3.*]), alias='python-signalfd_gevent'),
@@ -51,7 +57,7 @@ def test_parse_file_1():
 
 
 def test_parse_file_2():
-    assert pformat(dict(parse_config(here('config_2.ini')))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    assert pformat(dict(parse_config(open(here('config_2.ini'))))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='1.3'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='1.4'),
                   Entry('Django==1.5.8', alias='1.5'),
@@ -66,7 +72,7 @@ def test_parse_file_2():
 
 
 def test_parse_file_3():
-    assert pformat(dict(parse_config(here('config_3.ini')))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    assert pformat(dict(parse_config(open(here('config_3.ini'))))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='Django==1.3.7'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='Django==1.4.13'),
                   Entry('Django==1.5.8', alias='Django==1.5.8'),
@@ -696,3 +702,155 @@ def test_make_matrix_3():
                               'environment_variables': '',
                               'python_versions': 'pypy'}}"""
 
+
+def test_make_matrix_from_string_1():
+    assert pformat(from_string("""
+[matrix]
+python_versions =
+    2.6
+    2.7
+    3.3
+    3.4
+    pypy
+
+dependencies =
+    : trollius MySQL-python !python_versions[3.*]
+    win: trollius !python_versions[3.*]
+    : asyncio &python_versions[3.3]
+    : &python_versions[3.4]
+
+coverage_flags =
+    : true
+    nocover: false
+
+environment_variables =
+    debug: ASPECTLIB_DEBUG=yes
+    -
+""")) == """{'2.6': {'coverage_flags': 'true',
+         'dependencies': 'trollius MySQL-python',
+         'environment_variables': '',
+         'python_versions': '2.6'},
+ '2.6-debug': {'coverage_flags': 'true',
+               'dependencies': 'trollius MySQL-python',
+               'environment_variables': 'ASPECTLIB_DEBUG=yes',
+               'python_versions': '2.6'},
+ '2.6-nocover': {'coverage_flags': 'false',
+                 'dependencies': 'trollius MySQL-python',
+                 'environment_variables': '',
+                 'python_versions': '2.6'},
+ '2.6-nocover-debug': {'coverage_flags': 'false',
+                       'dependencies': 'trollius MySQL-python',
+                       'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                       'python_versions': '2.6'},
+ '2.6-win': {'coverage_flags': 'true',
+             'dependencies': 'trollius',
+             'environment_variables': '',
+             'python_versions': '2.6'},
+ '2.6-win-debug': {'coverage_flags': 'true',
+                   'dependencies': 'trollius',
+                   'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                   'python_versions': '2.6'},
+ '2.6-win-nocover': {'coverage_flags': 'false',
+                     'dependencies': 'trollius',
+                     'environment_variables': '',
+                     'python_versions': '2.6'},
+ '2.6-win-nocover-debug': {'coverage_flags': 'false',
+                           'dependencies': 'trollius',
+                           'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                           'python_versions': '2.6'},
+ '2.7': {'coverage_flags': 'true',
+         'dependencies': 'trollius MySQL-python',
+         'environment_variables': '',
+         'python_versions': '2.7'},
+ '2.7-debug': {'coverage_flags': 'true',
+               'dependencies': 'trollius MySQL-python',
+               'environment_variables': 'ASPECTLIB_DEBUG=yes',
+               'python_versions': '2.7'},
+ '2.7-nocover': {'coverage_flags': 'false',
+                 'dependencies': 'trollius MySQL-python',
+                 'environment_variables': '',
+                 'python_versions': '2.7'},
+ '2.7-nocover-debug': {'coverage_flags': 'false',
+                       'dependencies': 'trollius MySQL-python',
+                       'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                       'python_versions': '2.7'},
+ '2.7-win': {'coverage_flags': 'true',
+             'dependencies': 'trollius',
+             'environment_variables': '',
+             'python_versions': '2.7'},
+ '2.7-win-debug': {'coverage_flags': 'true',
+                   'dependencies': 'trollius',
+                   'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                   'python_versions': '2.7'},
+ '2.7-win-nocover': {'coverage_flags': 'false',
+                     'dependencies': 'trollius',
+                     'environment_variables': '',
+                     'python_versions': '2.7'},
+ '2.7-win-nocover-debug': {'coverage_flags': 'false',
+                           'dependencies': 'trollius',
+                           'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                           'python_versions': '2.7'},
+ '3.3': {'coverage_flags': 'true',
+         'dependencies': 'asyncio',
+         'environment_variables': '',
+         'python_versions': '3.3'},
+ '3.3-debug': {'coverage_flags': 'true',
+               'dependencies': 'asyncio',
+               'environment_variables': 'ASPECTLIB_DEBUG=yes',
+               'python_versions': '3.3'},
+ '3.3-nocover': {'coverage_flags': 'false',
+                 'dependencies': 'asyncio',
+                 'environment_variables': '',
+                 'python_versions': '3.3'},
+ '3.3-nocover-debug': {'coverage_flags': 'false',
+                       'dependencies': 'asyncio',
+                       'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                       'python_versions': '3.3'},
+ '3.4': {'coverage_flags': 'true',
+         'dependencies': ' ',
+         'environment_variables': '',
+         'python_versions': '3.4'},
+ '3.4-debug': {'coverage_flags': 'true',
+               'dependencies': ' ',
+               'environment_variables': 'ASPECTLIB_DEBUG=yes',
+               'python_versions': '3.4'},
+ '3.4-nocover': {'coverage_flags': 'false',
+                 'dependencies': ' ',
+                 'environment_variables': '',
+                 'python_versions': '3.4'},
+ '3.4-nocover-debug': {'coverage_flags': 'false',
+                       'dependencies': ' ',
+                       'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                       'python_versions': '3.4'},
+ 'pypy': {'coverage_flags': 'true',
+          'dependencies': 'trollius MySQL-python',
+          'environment_variables': '',
+          'python_versions': 'pypy'},
+ 'pypy-debug': {'coverage_flags': 'true',
+                'dependencies': 'trollius MySQL-python',
+                'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                'python_versions': 'pypy'},
+ 'pypy-nocover': {'coverage_flags': 'false',
+                  'dependencies': 'trollius MySQL-python',
+                  'environment_variables': '',
+                  'python_versions': 'pypy'},
+ 'pypy-nocover-debug': {'coverage_flags': 'false',
+                        'dependencies': 'trollius MySQL-python',
+                        'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                        'python_versions': 'pypy'},
+ 'pypy-win': {'coverage_flags': 'true',
+              'dependencies': 'trollius',
+              'environment_variables': '',
+              'python_versions': 'pypy'},
+ 'pypy-win-debug': {'coverage_flags': 'true',
+                    'dependencies': 'trollius',
+                    'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                    'python_versions': 'pypy'},
+ 'pypy-win-nocover': {'coverage_flags': 'false',
+                      'dependencies': 'trollius',
+                      'environment_variables': '',
+                      'python_versions': 'pypy'},
+ 'pypy-win-nocover-debug': {'coverage_flags': 'false',
+                            'dependencies': 'trollius',
+                            'environment_variables': 'ASPECTLIB_DEBUG=yes',
+                            'python_versions': 'pypy'}}"""

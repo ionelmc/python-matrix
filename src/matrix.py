@@ -2,28 +2,32 @@
 __version__ = "0.1.3"
 
 import re
-from ConfigParser import ConfigParser
-from itertools import product
-from fnmatch import fnmatch
-
 from collections import OrderedDict
+from ConfigParser import ConfigParser
+from fnmatch import fnmatch
+from itertools import product
+import warnings
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 entry_rx = re.compile(r"""
     ^
-    ((?P<alias>[^:]*):)?
+    ((?P<merge>\?))?
+    ((?P<alias>[^\?:]*):)?
     \s*(?P<value>[^!&]+?)\s*
     (?P<reducers>[!&].+)?
     $
 """, re.VERBOSE)
 reducer_rx = re.compile(r"""
-
-        \s*
-        (?P<type>[!&])
-        (?P<variable>[^!&\[\]]+)
-        \[(?P<glob>[^\[\]]+)\]
-        \s*
-
+    \s*
+    (?P<type>[!&])
+    (?P<variable>[^!&\[\]]+)
+    \[(?P<glob>[^\[\]]+)\]
+    \s*
 """, re.VERBOSE)
 
 special_chars_rx = re.compile(r'[\\/:>?|\[\]< ]+')
@@ -32,10 +36,15 @@ special_chars_rx = re.compile(r'[\\/:>?|\[\]< ]+')
 class ParseError(Exception):
     pass
 
-
-class DuplicateEntry(ParseError):
+class DuplicateEntry(UserWarning):
     def __str__(self):
         return "Duplicate entry %r (from %r). Conflicts with %r - it has the same alias." % self.args
+    __repr__ = __str__
+
+
+class DuplicateEnvironment(UserWarning):
+    def __str__(self):
+        return "Duplicate environment %r. It has conflicting sets of data: %r != %r." % self.args
     __repr__ = __str__
 
 
@@ -62,6 +71,7 @@ class Entry(object):
         if not value or value == '-':
             self.alias = ''
             self.value = ''
+            self.merge = False
             self.reducers = []
         else:
             m = entry_rx.match(value)
@@ -70,6 +80,7 @@ class Entry(object):
             m = m.groupdict()
             self.alias = m['alias']
             self.value = m['value']
+            self.merge = m['merge']
             self.reducers = [Reducer(i) for i in reducer_rx.findall(m['reducers'] or '')]
 
         if self.alias is None:
@@ -87,9 +98,9 @@ class Entry(object):
     __repr__ = __str__
 
 
-def parse_config(filename):
+def parse_config(fp):
     parser = ConfigParser()
-    parser.read(filename)
+    parser.readfp(fp)
     config = OrderedDict()
     for name, value in parser.items('matrix'):
         entries = config[name] = []
@@ -97,9 +108,8 @@ def parse_config(filename):
             entry = Entry(line)
             duplicates = [i for i in entries if i == entry]
             if duplicates:
-                raise DuplicateEntry(entry, line, duplicates)
-            else:
-                entries.append(entry)
+                warnings.warn(DuplicateEntry(entry, line, duplicates), DuplicateEntry, 1)
+            entries.append(entry)
     return config
 
 
@@ -111,16 +121,24 @@ def from_config(config):
     variables = config.keys()
     for entries in product(*config.values()):
         combination = dict(zip(variables, entries))
+        #print combination
         include = True
         for value in combination.values():
+            #print "***** ", value
             for reducer in value.reducers:
                 match = fnmatch(combination[reducer.variable].value, reducer.pattern)
+                #if match:
+                    #print '  -', reducer.is_exclude, combination[reducer.variable].value, reducer.pattern
                 if match if reducer.is_exclude else not match:
                     include = False
         if include:
-            matrix['-'.join(entry.alias for entry in entries if entry.alias)] = dict(
+            key = '-'.join(entry.alias for entry in entries if entry.alias)
+            data = dict(
                 zip(variables, (entry.value for entry in entries))
             )
+            if key in matrix and data != matrix[key]:
+                raise DuplicateEnvironment(key, data, matrix[key])
+            matrix[key] = data
     return matrix
 
 
@@ -128,5 +146,13 @@ def from_file(filename):
     """
     Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
     """
-    config = parse_config(filename)
+    config = parse_config(open(filename))
+    return from_config(config)
+
+
+def from_string(string):
+    """
+    Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
+    """
+    config = parse_config(StringIO(string))
     return from_config(config)
