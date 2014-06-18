@@ -36,6 +36,7 @@ special_chars_rx = re.compile(r'[\\/:>?|\[\]< ]+')
 class ParseError(Exception):
     pass
 
+
 class DuplicateEntry(UserWarning):
     def __str__(self):
         return "Duplicate entry %r (from %r). Conflicts with %r - it has the same alias." % self.args
