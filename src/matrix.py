@@ -42,7 +42,7 @@ class DuplicateEntry(UserWarning):
     __repr__ = __str__
 
 
-class DuplicateEnvironment(UserWarning):
+class DuplicateEnvironment(Exception):
     def __str__(self):
         return "Duplicate environment %r. It has conflicting sets of data: %r != %r." % self.args
     __repr__ = __str__
