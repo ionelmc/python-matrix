@@ -121,14 +121,10 @@ def from_config(config):
     variables = config.keys()
     for entries in product(*config.values()):
         combination = dict(zip(variables, entries))
-        #print combination
         include = True
         for value in combination.values():
-            #print "***** ", value
             for reducer in value.reducers:
                 match = fnmatch(combination[reducer.variable].value, reducer.pattern)
-                #if match:
-                    #print '  -', reducer.is_exclude, combination[reducer.variable].value, reducer.pattern
                 if match if reducer.is_exclude else not match:
                     include = False
         if include:
