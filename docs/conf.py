@@ -4,7 +4,6 @@ import os
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
@@ -18,7 +17,7 @@ if os.getenv('SPELLCHECK'):
 
 source_suffix = '.rst'
 master_doc = 'index'
-project = u'matrix'
+project = u'Matrix'
 copyright = u'2014, Ionel Cristian Mărieș'
 version = release = re.findall(
     'version="(.*)"',

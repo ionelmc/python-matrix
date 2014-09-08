@@ -17,8 +17,8 @@ When `reporting a bug <https://github.com/ionelmc/python-matrix/issues>`_ please
 Documentation improvements
 ==========================
 
-matrix could always use more documentation, whether as part of the
-official matrix docs, in docstrings, or even on the web in blog posts,
+Matrix could always use more documentation, whether as part of the
+official Matrix docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Feature requests and feedback

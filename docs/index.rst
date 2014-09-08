@@ -1,4 +1,4 @@
-Welcome to matrix's documentation!
+Welcome to Matrix's documentation!
 ======================================
 
 Contents:
