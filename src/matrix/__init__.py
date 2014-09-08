@@ -118,6 +118,8 @@ def parse_config(fp):
             if duplicates:
                 warnings.warn(DuplicateEntry(entry, line, duplicates), DuplicateEntry, 1)
             entries.append(entry)
+        if not entries:
+            entries.append(Entry('-'))
     return config
 
 

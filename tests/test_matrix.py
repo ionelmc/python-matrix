@@ -872,3 +872,78 @@ environment_variables =
                                    'environment_variables': 'ASPECTLIB_DEBUG=yes',
                                    'python_versions': 'pypy'}
     })
+
+def test_make_matrix_from_string_2():
+    pprint(from_string("""
+[matrix]
+python_versions =
+    2.6
+    2.7
+    3.3
+    3.4
+    pypy
+
+dependencies =
+coverage_flags =
+    : true
+    nocover: false
+
+environment_variables =
+"""))
+    assert _py26_fixup(from_string("""
+[matrix]
+python_versions =
+    2.6
+    2.7
+    3.3
+    3.4
+    pypy
+
+dependencies =
+coverage_flags =
+    : true
+    nocover: false
+
+environment_variables =
+""")) == _py26_fixup({
+        '2.6': {'coverage_flags': 'true',
+                'dependencies': '',
+                'environment_variables': '',
+                'python_versions': '2.6'},
+        '2.6-nocover': {'coverage_flags': 'false',
+                        'dependencies': '',
+                        'environment_variables': '',
+                        'python_versions': '2.6'},
+        '2.7': {'coverage_flags': 'true',
+                'dependencies': '',
+                'environment_variables': '',
+                'python_versions': '2.7'},
+        '2.7-nocover': {'coverage_flags': 'false',
+                        'dependencies': '',
+                        'environment_variables': '',
+                        'python_versions': '2.7'},
+        '3.3': {'coverage_flags': 'true',
+                'dependencies': '',
+                'environment_variables': '',
+                'python_versions': '3.3'},
+        '3.3-nocover': {'coverage_flags': 'false',
+                        'dependencies': '',
+                        'environment_variables': '',
+                        'python_versions': '3.3'},
+        '3.4': {'coverage_flags': 'true',
+                'dependencies': '',
+                'environment_variables': '',
+                'python_versions': '3.4'},
+        '3.4-nocover': {'coverage_flags': 'false',
+                        'dependencies': '',
+                        'environment_variables': '',
+                        'python_versions': '3.4'},
+        'pypy': {'coverage_flags': 'true',
+                 'dependencies': '',
+                 'environment_variables': '',
+                 'python_versions': 'pypy'},
+        'pypy-nocover': {'coverage_flags': 'false',
+                         'dependencies': '',
+                         'environment_variables': '',
+                         'python_versions': 'pypy'}
+    })
