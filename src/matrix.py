@@ -3,7 +3,10 @@ __version__ = "0.4.0"
 
 import re
 from collections import OrderedDict
-from ConfigParser import ConfigParser
+try:
+    from ConfigParser import ConfigParser
+except ImportError:
+    from configparser import ConfigParser
 from fnmatch import fnmatch
 from itertools import product
 import warnings
@@ -50,7 +53,8 @@ class DuplicateEnvironment(Exception):
 
 
 class Reducer(object):
-    def __init__(self, (kind, variable, pattern)):
+    def __init__(self, entry):
+        kind, variable, pattern = entry
         assert kind in "&!"
         self.kind = kind
         self.is_exclude = kind == '!'
