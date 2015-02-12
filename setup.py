@@ -19,7 +19,7 @@ def read(*names, **kwargs):
 
 setup(
     name="matrix",
-    version="1.0.0",
+    version="1.1.0",
     license="BSD",
     description="Generic matrix generator.",
     long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
