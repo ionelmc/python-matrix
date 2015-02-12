@@ -134,7 +134,10 @@ def from_config(config):
         include = True
         for value in combination.values():
             for reducer in value.reducers:
-                match = fnmatch(combination[reducer.variable].value, reducer.pattern)
+                if reducer.pattern == '-':
+                    match = not combination[reducer.variable].value
+                else:
+                    match = fnmatch(combination[reducer.variable].value, reducer.pattern)
                 if match if reducer.is_exclude else not match:
                     include = False
         if include:

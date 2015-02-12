@@ -2,6 +2,10 @@
 Changelog
 =========
 
+1.1.0 (2015-02-12)
+------------------
+
+* Add support for empty inclusions/exclusions.
 
 1.0.0 (2014-08-09)
 ------------------
