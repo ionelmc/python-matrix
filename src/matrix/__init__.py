@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-__version__ = "1.1.0"
-
 import re
 try:
     from collections import OrderedDict
@@ -19,6 +17,8 @@ try:
 except ImportError:
     from io import StringIO
 
+
+__version__ = "1.1.0"
 
 entry_rx = re.compile(r"""
     ^
