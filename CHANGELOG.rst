@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.2.0 (2015-04-03)
+------------------
+
+* Fix handling when having aliased entries that have empty ("-") values.
+
 1.1.0 (2015-02-12)
 ------------------
 
