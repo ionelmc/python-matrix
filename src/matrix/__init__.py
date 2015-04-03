@@ -76,7 +76,7 @@ class Reducer(object):
 class Entry(object):
     def __init__(self, value):
         value = value.strip()
-        if not value or value == '-':
+        if not value:
             self.alias = ''
             self.value = ''
             self.merge = False
@@ -90,6 +90,9 @@ class Entry(object):
             self.value = m['value']
             self.merge = m['merge']
             self.reducers = [Reducer(i) for i in reducer_rx.findall(m['reducers'] or '')]
+
+        if self.value == '-':
+            self.value = ''
 
         if self.alias is None:
             self.alias = special_chars_rx.sub('_', self.value)
