@@ -3,8 +3,14 @@ from __future__ import print_function
 import argparse
 from os.path import basename
 from os.path import join
-from os.path import samefile
 from os.path import exists
+try:
+    from os.path import samefile
+except ImportError:
+    from os.path import abspath
+
+    def samefile(a, b):
+        return abspath(a) == abspath(b)
 
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
