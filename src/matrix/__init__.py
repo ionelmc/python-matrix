@@ -109,11 +109,11 @@ class Entry(object):
     __repr__ = __str__
 
 
-def parse_config(fp):
+def parse_config(fp, section='matrix'):
     parser = ConfigParser()
     parser.readfp(fp)
     config = OrderedDict()
-    for name, value in parser.items('matrix'):
+    for name, value in parser.items(section):
         entries = config[name] = []
         for line in value.strip().splitlines():
             entry = Entry(line)
@@ -154,17 +154,17 @@ def from_config(config):
     return matrix
 
 
-def from_file(filename):
+def from_file(filename, section='matrix'):
     """
     Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
     """
-    config = parse_config(open(filename))
+    config = parse_config(open(filename), section=section)
     return from_config(config)
 
 
-def from_string(string):
+def from_string(string, section='matrix'):
     """
     Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
     """
-    config = parse_config(StringIO(string))
+    config = parse_config(StringIO(string), section=section)
     return from_config(config)

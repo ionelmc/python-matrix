@@ -2,6 +2,12 @@
 Changelog
 =========
 
+1.3.0 (2015-04-15)
+------------------
+
+* Added an optional ``[cli]`` extra (use ``pip install matrix[cli]``) that enables a ``matrix-render`` command. 
+  The new command loads configuration and passes the generated matrix to the given Jinja2 templates.
+
 1.2.0 (2015-04-03)
 ------------------
 

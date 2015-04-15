@@ -53,11 +53,12 @@ setup(
     install_requires=[
     ],
     extras_require={
+        'cli:python_version=="2.6"': ['argparse'],
+        'cli': ['Jinja2'],
     },
     entry_points={
         "console_scripts": [
-            "matrix = matrix:main"
+            "matrix-render = matrix.cli:main"
         ]
     }
-
 )

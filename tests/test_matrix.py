@@ -7,6 +7,7 @@ from matrix import Entry
 from matrix import from_file
 from matrix import from_string
 from matrix import parse_config
+from matrix.cli import main
 
 
 def _py26_fixup(matrix):
@@ -21,6 +22,20 @@ def _py26_fixup(matrix):
 
 def here(path):
     return os.path.join(os.path.dirname(__file__), path)
+
+
+def test_cli(monkeypatch, tmpdir):
+    monkeypatch.setattr(sys, 'argv', ['matrix-render', '-c', 'tests/sample.cfg', '-s', 'config', 'tests/template.txt', '-d', str(tmpdir)])
+    main()
+    output = tmpdir.join('template.txt').read()
+    print(output)
+    assert output == (
+        "1-3: [('bar', '3'), ('foo', '1')]\n"
+        "1-4: [('bar', '4'), ('foo', '1')]\n"
+        "2-3: [('bar', '3'), ('foo', '2')]\n"
+        "2-4: [('bar', '4'), ('foo', '2')]\n"
+    )
+
 
 
 def test_parse_1():
@@ -46,6 +61,7 @@ def test_parse_4():
         str(Entry("alias: val1 val2 val3 !exclude1[] &include1[]")) ==
         "Entry('val1 val2 val3', alias='alias')"
     )
+
 
 def test_parse_file_1():
     assert pformat(dict(parse_config(open(here('config_1.ini'))))) == """{'coverage_flags': [Entry('true', alias='cover'),

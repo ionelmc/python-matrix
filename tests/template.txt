@@ -1,0 +1,3 @@
+{% for k, v in matrix.items()|sort %}
+{{ k }}: {{ v.items()|sort }}
+{% endfor %}
