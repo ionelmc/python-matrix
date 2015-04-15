@@ -29,13 +29,12 @@ def test_cli(monkeypatch, tmpdir):
     main()
     output = tmpdir.join('template.txt').read()
     print(output)
-    assert output == (
-        "1-3: [('bar', '3'), ('foo', '1')]\n"
-        "1-4: [('bar', '4'), ('foo', '1')]\n"
-        "2-3: [('bar', '3'), ('foo', '2')]\n"
-        "2-4: [('bar', '4'), ('foo', '2')]\n"
-    )
-
+    assert set(output.splitlines()) == set((
+        "-13: [('bar', '3'), ('foo', '1')]",
+        "-14: [('bar', '4'), ('foo', '1')]",
+        "-23: [('bar', '3'), ('foo', '2')]",
+        "-24: [('bar', '4'), ('foo', '2')]",
+    ))
 
 
 def test_parse_1():
