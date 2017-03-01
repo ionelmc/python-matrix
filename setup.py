@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='matrix',
-    version='2.0.0',
+    version='2.0.1',
     license='BSD',
     description='Generic matrix generator.',
     long_description='%s\n%s' % (
