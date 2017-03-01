@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 import re
+import warnings
+from fnmatch import fnmatch
+from itertools import product
+
+from backports.configparser2 import ConfigParser
 
 try:
     from collections import OrderedDict
 except ImportError:
     from .ordereddict import OrderedDict
-from backports.configparser2 import ConfigParser
-from fnmatch import fnmatch
-from itertools import product
-import warnings
 
 try:
     from StringIO import StringIO

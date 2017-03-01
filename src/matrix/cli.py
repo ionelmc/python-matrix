@@ -2,8 +2,14 @@ from __future__ import print_function
 
 import argparse
 from os.path import basename
-from os.path import join
 from os.path import exists
+from os.path import join
+
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
+
+from . import from_file
+
 try:
     from os.path import samefile
 except ImportError:
@@ -11,11 +17,6 @@ except ImportError:
 
     def samefile(a, b):
         return abspath(a) == abspath(b)
-
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
-
-from . import from_file
 
 
 def main():
@@ -51,6 +52,7 @@ def main():
         with open(dest, "w") as fh:
             fh.write(jinja.get_template(name).render(matrix=matrix))
         print("DONE.")
+
 
 if __name__ == "__main__":
     main()
