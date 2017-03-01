@@ -1,8 +1,13 @@
 [paths]
-source = src
+source =
+   src/matrix
+   */site-packages/matrix
 
 [run]
-source = src
+branch = true
+source =
+    matrix
+    tests
 parallel = true
 
 [report]

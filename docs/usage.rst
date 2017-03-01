@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Matrix in a project::
+To use matrix in a project::
 
 	import matrix
