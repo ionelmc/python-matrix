@@ -65,10 +65,9 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     install_requires=[
-        # eg: 'aspectlib==1.1.1', 'six>=1.7',
+        'configparser2>=4.0.0',
     ],
     extras_require={
-        'cli:python_version=="2.6"': ['argparse'],
         'cli': ['Jinja2'],
     },
     entry_points={

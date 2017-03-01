@@ -1,23 +1,12 @@
 import os
 import sys
 from pprint import pformat
-from pprint import pprint
 
 from matrix import Entry
 from matrix import from_file
 from matrix import from_string
 from matrix import parse_config
 from matrix.cli import main
-
-
-def _py26_fixup(matrix):
-    # cause ConfigParser is crappy in 2.6: doesn't keep the original order (as there is no OrderedDict in 2.6)
-    if sys.version_info[:2] == (2, 6):
-        return dict(
-            (frozenset(k.split('-')), v) for k, v in matrix.items()
-        )
-    else:
-        return matrix
 
 
 def here(path):
@@ -112,7 +101,7 @@ def test_parse_file_3():
 
 
 def test_make_matrix_1():
-    assert _py26_fixup(from_file(here('config_1.ini'))) == _py26_fixup({
+    assert from_file(here('config_1.ini')) == {
         '2.6-cover': {'coverage_flags': 'true',
                       'dependencies': '',
                       'environment_variables': '',
@@ -401,11 +390,11 @@ def test_make_matrix_1():
                                                             'dependencies': 'python-signalfd gevent',
                                                             'environment_variables': 'PATCH_THREAD=yes',
                                                             'python_versions': 'pypy'}
-    })
+    }
 
 
 def test_make_matrix_2():
-    assert _py26_fixup(from_file(here('config_2.ini'))) == _py26_fixup({
+    assert from_file(here('config_2.ini')) == {
         '2.6-1.3': {'coverage_flags': 'true',
                     'depencencies': 'Django==1.3.7',
                     'environment_variables': '',
@@ -566,11 +555,11 @@ def test_make_matrix_2():
                                 'depencencies': 'https://www.djangoproject.com/download/1.7.b4/tarball/',
                                 'environment_variables': '',
                                 'python_versions': 'pypy'}
-    })
+    }
 
 
 def test_make_matrix_3():
-    assert _py26_fixup(from_file(here('config_3.ini'))) == _py26_fixup({
+    assert from_file(here('config_3.ini')) == {
         '2.6-Django==1.3.7': {'coverage_flags': 'true',
                               'depencencies': 'Django==1.3.7',
                               'environment_variables': '',
@@ -731,11 +720,11 @@ def test_make_matrix_3():
                                      'depencencies': 'https://www.djangoproject.com/download/1.7.b4/tarball/',
                                      'environment_variables': '',
                                      'python_versions': 'pypy'}
-    })
+    }
 
 
 def test_make_matrix_from_string_1():
-    assert _py26_fixup(from_string("""
+    assert from_string("""
 [matrix]
 python_versions =
     2.6
@@ -757,7 +746,7 @@ coverage_flags =
 environment_variables =
     debug: ASPECTLIB_DEBUG=yes
     -
-""")) == _py26_fixup({
+""") == {
         '2.6': {'coverage_flags': 'true',
                 'dependencies': 'trollius MySQL-python',
                 'environment_variables': '',
@@ -886,13 +875,15 @@ environment_variables =
                                    'dependencies': 'trollius',
                                    'environment_variables': 'ASPECTLIB_DEBUG=yes',
                                    'python_versions': 'pypy'}
-    })
+    }
 
 def test_make_matrix_from_string_2():
-    pprint(from_string("""
+    assert from_string("""
 [matrix]
 python_versions =
+    # some
     2.6
+    # junk
     2.7
     3.3
     3.4
@@ -904,23 +895,7 @@ coverage_flags =
     nocover: false
 
 environment_variables =
-"""))
-    assert _py26_fixup(from_string("""
-[matrix]
-python_versions =
-    2.6
-    2.7
-    3.3
-    3.4
-    pypy
-
-dependencies =
-coverage_flags =
-    : true
-    nocover: false
-
-environment_variables =
-""")) == _py26_fixup({
+""") == {
         '2.6': {'coverage_flags': 'true',
                 'dependencies': '',
                 'environment_variables': '',
@@ -961,4 +936,4 @@ environment_variables =
                          'dependencies': '',
                          'environment_variables': '',
                          'python_versions': 'pypy'}
-    })
+    }

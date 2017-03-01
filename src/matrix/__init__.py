@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
+
 try:
     from collections import OrderedDict
 except ImportError:
     from .ordereddict import OrderedDict
-try:
-    from ConfigParser import ConfigParser
-except ImportError:
-    from configparser import ConfigParser
+from backports.configparser2 import ConfigParser
 from fnmatch import fnmatch
 from itertools import product
 import warnings
@@ -16,7 +14,6 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-
 
 __version__ = "1.3.1"
 
@@ -46,12 +43,14 @@ class ParseError(Exception):
 class DuplicateEntry(UserWarning):
     def __str__(self):
         return "Duplicate entry %r (from %r). Conflicts with %r - it has the same alias." % self.args
+
     __repr__ = __str__
 
 
 class DuplicateEnvironment(Exception):
     def __str__(self):
         return "Duplicate environment %r. It has conflicting sets of data: %r != %r." % self.args
+
     __repr__ = __str__
 
 
@@ -70,6 +69,7 @@ class Reducer(object):
             self.variable,
             self.pattern,
         )
+
     __repr__ = __str__
 
 
@@ -106,6 +106,7 @@ class Entry(object):
             ', '.join(str(i) for i in self.reducers) + ', ' if self.reducers else '',
             self.alias,
         )
+
     __repr__ = __str__
 
 

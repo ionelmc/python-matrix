@@ -2,6 +2,12 @@
 Changelog
 =========
 
+2.0.0 (2016-02-03)
+------------------
+
+* Switch to configparser2 (the Python 3.5 backport)
+* Drop Python 2.6 support.
+
 1.3.1 (2015-04-15)
 ------------------
 
