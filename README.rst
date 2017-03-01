@@ -44,9 +44,9 @@ Overview
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/matrix
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v1.3.1.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v2.0.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-matrix/compare/v1.3.1...master
+    :target: https://github.com/ionelmc/python-matrix/compare/v2.0.0...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/matrix.svg
     :alt: PyPI Wheel
