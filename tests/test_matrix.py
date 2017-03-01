@@ -13,12 +13,19 @@ def here(path):
     return os.path.join(os.path.dirname(__file__), path)
 
 
+def strip_stupid_unicode_prefix(gunk):
+    if sys.version_info[:2] == (2, 7):
+        return gunk.replace("u'", "'")
+    else:
+        return gunk
+
+
 def test_cli(monkeypatch, tmpdir):
     monkeypatch.setattr(sys, 'argv', ['matrix-render', '-c', 'tests/sample.cfg', '-s', 'config', 'tests/template.txt', '-d', str(tmpdir)])
     main()
     output = tmpdir.join('template.txt').read()
     print(output)
-    assert set(output.splitlines()) == set((
+    assert set(strip_stupid_unicode_prefix(output).splitlines()) == set((
         "-13: [('bar', '3'), ('foo', '1')]",
         "-14: [('bar', '4'), ('foo', '1')]",
         "-23: [('bar', '3'), ('foo', '2')]",
@@ -52,7 +59,7 @@ def test_parse_4():
 
 
 def test_parse_file_1():
-    assert pformat(dict(parse_config(open(here('config_1.ini'))))) == """{'coverage_flags': [Entry('true', alias='cover'),
+    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_1.ini')))))) == """{'coverage_flags': [Entry('true', alias='cover'),
                     Entry('false', alias='nocover')],
  'dependencies': [Entry('python-signalfd', alias='python-signalfd'),
                   Entry('python-signalfd gevent', exclude(python_versions[3.*]), alias='python-signalfd_gevent'),
@@ -71,7 +78,7 @@ def test_parse_file_1():
 
 
 def test_parse_file_2():
-    assert pformat(dict(parse_config(open(here('config_2.ini'))))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_2.ini')))), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='1.3'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='1.4'),
                   Entry('Django==1.5.8', alias='1.5'),
@@ -86,7 +93,7 @@ def test_parse_file_2():
 
 
 def test_parse_file_3():
-    assert pformat(dict(parse_config(open(here('config_3.ini'))))) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_3.ini')))), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='Django==1.3.7'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='Django==1.4.13'),
                   Entry('Django==1.5.8', alias='Django==1.5.8'),
