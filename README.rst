@@ -10,62 +10,58 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |appveyor| |requires|
+      - | |github-actions| |requires|
         | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
-
 .. |docs| image:: https://readthedocs.org/projects/python-matrix/badge/?style=flat
-    :target: https://readthedocs.org/projects/python-matrix
+    :target: https://python-matrix.readthedocs.io/
     :alt: Documentation Status
 
-.. |travis| image:: https://travis-ci.org/ionelmc/python-matrix.svg?branch=master
-    :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/ionelmc/python-matrix
+.. |github-actions| image:: https://github.com/ionelmc/python-matrix/actions/workflows/github-actions.yml/badge.svg
+    :alt: GitHub Actions Build Status
+    :target: https://github.com/ionelmc/python-matrix/actions
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/ionelmc/python-matrix?branch=master&svg=true
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/ionelmc/python-matrix
-
-.. |requires| image:: https://requires.io/github/ionelmc/python-matrix/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/ionelmc/python-matrix/requirements.svg?branch=main
     :alt: Requirements Status
-    :target: https://requires.io/github/ionelmc/python-matrix/requirements/?branch=master
+    :target: https://requires.io/github/ionelmc/python-matrix/requirements/?branch=main
 
-.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-matrix/badge.svg?branch=master&service=github
+.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-matrix/badge.svg?branch=main&service=github
     :alt: Coverage Status
     :target: https://coveralls.io/r/ionelmc/python-matrix
 
-.. |codecov| image:: https://codecov.io/github/ionelmc/python-matrix/coverage.svg?branch=master
+.. |codecov| image:: https://codecov.io/gh/ionelmc/python-matrix/branch/main/graphs/badge.svg?branch=main
     :alt: Coverage Status
     :target: https://codecov.io/github/ionelmc/python-matrix
 
 .. |version| image:: https://img.shields.io/pypi/v/matrix.svg
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/matrix
-
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v2.0.1.svg
-    :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-matrix/compare/v2.0.1...master
+    :target: https://pypi.org/project/matrix
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/matrix.svg
     :alt: PyPI Wheel
-    :target: https://pypi.python.org/pypi/matrix
+    :target: https://pypi.org/project/matrix
 
 .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/matrix.svg
     :alt: Supported versions
-    :target: https://pypi.python.org/pypi/matrix
+    :target: https://pypi.org/project/matrix
 
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/matrix.svg
     :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/matrix
+    :target: https://pypi.org/project/matrix
+
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v2.0.1.svg
+    :alt: Commits since latest release
+    :target: https://github.com/ionelmc/python-matrix/compare/v2.0.1...main
+
 
 
 .. end-badges
 
 Generic matrix generator.
 
-* Free software: BSD license
+* Free software: BSD 2-Clause License
 
 Installation
 ============
@@ -74,15 +70,22 @@ Installation
 
     pip install matrix
 
+You can also install the in-development version with::
+
+    pip install https://github.com/ionelmc/python-matrix/archive/main.zip
+
+
 Documentation
 =============
 
+
 https://python-matrix.readthedocs.io/
+
 
 Development
 ===========
 
-To run the all tests run::
+To run all the tests run::
 
     tox
 

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
 import warnings
+from configparser import ConfigParser
 from fnmatch import fnmatch
 from itertools import product
-
-from backports.configparser2 import ConfigParser
 
 try:
     from collections import OrderedDict
@@ -113,7 +112,7 @@ class Entry(object):
 
 def parse_config(fp, section='matrix'):
     parser = ConfigParser()
-    parser.readfp(fp)
+    parser.read_file(fp)
     config = OrderedDict()
     for name, value in parser.items(section):
         entries = config[name] = []
@@ -160,7 +159,8 @@ def from_file(filename, section='matrix'):
     """
     Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
     """
-    config = parse_config(open(filename), section=section)
+    with open(filename) as fh:
+        config = parse_config(fh, section=section)
     return from_config(config)
 
 
@@ -168,5 +168,6 @@ def from_string(string, section='matrix'):
     """
     Generate a matrix from a .ini file. Configuration is expected to be in a ``[matrix]`` section.
     """
-    config = parse_config(StringIO(string), section=section)
+    with StringIO(string) as fh:
+        config = parse_config(fh, section=section)
     return from_config(config)

@@ -59,7 +59,8 @@ def test_parse_4():
 
 
 def test_parse_file_1():
-    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_1.ini')))))) == """{'coverage_flags': [Entry('true', alias='cover'),
+    with open(here('config_1.ini')) as fh:
+        assert strip_stupid_unicode_prefix(pformat(dict(parse_config(fh)))) == """{'coverage_flags': [Entry('true', alias='cover'),
                     Entry('false', alias='nocover')],
  'dependencies': [Entry('python-signalfd', alias='python-signalfd'),
                   Entry('python-signalfd gevent', exclude(python_versions[3.*]), alias='python-signalfd_gevent'),
@@ -78,7 +79,8 @@ def test_parse_file_1():
 
 
 def test_parse_file_2():
-    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_2.ini')))), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    with open(here('config_2.ini')) as fh:
+        assert strip_stupid_unicode_prefix(pformat(dict(parse_config(fh)), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='1.3'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='1.4'),
                   Entry('Django==1.5.8', alias='1.5'),
@@ -93,7 +95,8 @@ def test_parse_file_2():
 
 
 def test_parse_file_3():
-    assert strip_stupid_unicode_prefix(pformat(dict(parse_config(open(here('config_3.ini')))), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
+    with open(here('config_3.ini')) as fh:
+        assert strip_stupid_unicode_prefix(pformat(dict(parse_config(fh)), width=100)) == """{'coverage_flags': [Entry('true', alias=''), Entry('false', alias='nocover')],
  'depencencies': [Entry('Django==1.3.7', exclude(python_versions[3.*]), alias='Django==1.3.7'),
                   Entry('Django==1.4.13', exclude(python_versions[3.*]), alias='Django==1.4.13'),
                   Entry('Django==1.5.8', alias='Django==1.5.8'),
