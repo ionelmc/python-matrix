@@ -21,24 +21,43 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser(description='Process matrix configuration and fill templates.')
-    parser.add_argument('templates', metavar='TEMPLATE', nargs='+',
-                        help='A template to pass the results in.')
-    parser.add_argument('-c', '--config', dest='config', metavar='FILE',
-                        default='setup.cfg',
-                        help='Configuration file (ini-style) to pull matrix conf from. Default: %(default)r')
-    parser.add_argument('-s', '--section', dest='section', metavar='SECTION',
-                        default='matrix',
-                        help='Configuration section to use. Default: %(default)r')
-    parser.add_argument('-d', '--destination', dest='destination', metavar='DIRECTORY',
-                        default='.',
-                        help='Destination of template output. Default: %(default)r')
+    parser.add_argument(
+        'templates',
+        metavar='TEMPLATE',
+        nargs='+',
+        help='A template to pass the results in.',
+    )
+    parser.add_argument(
+        '-c',
+        '--config',
+        dest='config',
+        metavar='FILE',
+        default='setup.cfg',
+        help='Configuration file (ini-style) to pull matrix conf from. Default: %(default)r',
+    )
+    parser.add_argument(
+        '-s',
+        '--section',
+        dest='section',
+        metavar='SECTION',
+        default='matrix',
+        help='Configuration section to use. Default: %(default)r',
+    )
+    parser.add_argument(
+        '-d',
+        '--destination',
+        dest='destination',
+        metavar='DIRECTORY',
+        default='.',
+        help='Destination of template output. Default: %(default)r',
+    )
 
     args = parser.parse_args()
     jinja = Environment(
         loader=FileSystemLoader('.'),
         trim_blocks=True,
         lstrip_blocks=True,
-        keep_trailing_newline=True
+        keep_trailing_newline=True,
     )
     print('Creating matrix from {0}[{1}] ... '.format(args.config, args.section), end='')
     matrix = from_file(args.config, section=args.section)

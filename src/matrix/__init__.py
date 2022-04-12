@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 import re
 import warnings
+from collections import OrderedDict
 from configparser import ConfigParser
 from fnmatch import fnmatch
 from itertools import product
-
-try:
-    from collections import OrderedDict
-except ImportError:
-    from .ordereddict import OrderedDict
 
 try:
     from StringIO import StringIO
@@ -17,21 +13,27 @@ except ImportError:
 
 __version__ = "2.0.1"
 
-entry_rx = re.compile(r"""
+entry_rx = re.compile(
+    r"""
     ^
     ((?P<merge>\?))?
     ((?P<alias>[^\?:]*):)?
     \s*(?P<value>[^!&]+?)\s*
     (?P<reducers>[!&].+)?
     $
-""", re.VERBOSE)
-reducer_rx = re.compile(r"""
+""",
+    re.VERBOSE,
+)
+reducer_rx = re.compile(
+    r"""
     \s*
     (?P<type>[!&])
     (?P<variable>[^!&\[\]]+)
     \[(?P<glob>[^\[\]]+)\]
     \s*
-""", re.VERBOSE)
+""",
+    re.VERBOSE,
+)
 
 special_chars_rx = re.compile(r'[\\/:>?|\[\]< ]+')
 
@@ -146,9 +148,7 @@ def from_config(config):
                     include = False
         if include:
             key = '-'.join(entry.alias for entry in entries if entry.alias)
-            data = dict(
-                zip(variables, (entry.value for entry in entries))
-            )
+            data = dict(zip(variables, (entry.value for entry in entries)))
             if key in matrix and data != matrix[key]:
                 raise DuplicateEnvironment(key, data, matrix[key])
             matrix[key] = data

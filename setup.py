@@ -68,8 +68,7 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     python_requires='>=3.6',
-    install_requires=[
-    ],
+    install_requires=[],
     extras_require={
         'cli': ['jinja2']
         #   'rst': ['docutils>=0.11'],
