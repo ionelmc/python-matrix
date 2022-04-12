@@ -20,7 +20,7 @@ def read(*names, **kwargs):
 
 setup(
     name='matrix',
-    version='2.0.1',
+    version='3.0.0',
     license='BSD-2-Clause',
     description='Generic matrix generator.',
     long_description='{}\n{}'.format(

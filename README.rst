@@ -51,9 +51,9 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/matrix
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v2.0.1.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-matrix/v3.0.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-matrix/compare/v2.0.1...main
+    :target: https://github.com/ionelmc/python-matrix/compare/v3.0.0...main
 
 
 

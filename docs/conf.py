@@ -20,7 +20,7 @@ project = 'matrix'
 year = '2014-2022'
 author = 'Ionel Cristian Mărieș'
 copyright = '{0}, {1}'.format(year, author)
-version = release = '2.0.1'
+version = release = '3.0.0'
 
 pygments_style = 'trac'
 templates_path = ['.']

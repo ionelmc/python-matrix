@@ -11,7 +11,7 @@ try:
 except ImportError:
     from io import StringIO
 
-__version__ = '2.0.1'
+__version__ = '3.0.0'
 
 entry_rx = re.compile(
     r"""
